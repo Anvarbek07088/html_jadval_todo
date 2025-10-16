@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Interaktiv Forma & Jadval — Qo'shish / Tahrirlash / O'chirish</title>
+
+    <!-- Google Fonts (onlayn) - agar internet yo'q bo'lsa, tizim font ishlatiladi -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg1: #f0f7ff;
+        --card: #ffffff;
+        --accent1: #0b63d4;
+        --accent2: #0073e6;
+        --muted: #6b8299;
+        --glass: rgba(255, 255, 255, 0.65);
+        --radius: 14px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        background: linear-gradient(135deg, #eaf6ff 0%, #f7fbff 100%);
+        color: #123;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding: 28px 16px;
+      }
+
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        padding: 22px;
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(3, 34, 85, 0.12);
+        margin-bottom: 22px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        font-size: 20px;
+      }
+
+      /* Layout: two-column card */
+      .card {
+        display: flex;
+        gap: 22px;
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: 0 12px 30px rgba(13, 40, 80, 0.06);
+        padding: 18px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      /* Left: form */
+      .form-column {
+        flex: 1 1 420px; /* grow, shrink, basis */
+        min-width: 320px;
+        padding: 18px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(11, 99, 212, 0.03),
+          rgba(0, 115, 230, 0.01)
+        );
+        border: 1px solid rgba(11, 99, 212, 0.06);
+      }
+
+      .form-title {
+        font-weight: 700;
+        color: var(--accent1);
+        margin-bottom: 12px;
+        font-size: 18px;
+      }
+
+      .row {
+        display: flex;
+        gap: 12px;
+      }
+
+      .col {
+        flex: 1;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(15, 60, 120, 0.08);
+        background: linear-gradient(180deg, #ffffff, #fbfdff);
+        font-size: 14px;
+        color: #123;
+        transition: box-shadow 0.18s, border-color 0.18s, transform 0.06s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent2);
+        box-shadow: 0 6px 18px rgba(0, 115, 230, 0.12);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 72px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 14px;
+        align-items: center;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        background: linear-gradient(90deg, var(--accent2), var(--accent1));
+        color: white;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 700;
+        box-shadow: 0 8px 20px rgba(3, 34, 85, 0.12);
+        transition: transform 0.12s, box-shadow 0.12s;
+      }
+
+      .btn.secondary {
+        background: transparent;
+        color: var(--accent1);
+        border: 1px solid rgba(11, 99, 212, 0.12);
+        font-weight: 600;
+        box-shadow: none;
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      /* Right: info / tips */
+      .meta {
+        flex: 0 0 240px;
+        min-width: 200px;
+        padding: 16px;
+        border-radius: 10px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.7),
+          rgba(255, 255, 255, 0.9)
+        );
+        border: 1px solid rgba(3, 34, 85, 0.03);
+      }
+      .meta h4 {
+        margin: 0 0 6px 0;
+        color: var(--accent1);
+      }
+      .meta p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* Table area below */
+      .table-card {
+        margin-top: 20px;
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 14px;
+        box-shadow: 0 12px 28px rgba(8, 28, 60, 0.06);
+      }
+
+      .table-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .table-head h3 {
+        margin: 0;
+        color: var(--accent1);
+        font-size: 16px;
+      }
+
+      .table-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(11, 99, 212, 0.06);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+        font-size: 14px;
+      }
+
+      thead th {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        color: white;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.9px;
+        padding: 12px 10px;
+      }
+
+      tbody tr {
+        background: linear-gradient(180deg, #fff, #fbfeff);
+      }
+      tbody tr:hover {
+        background: linear-gradient(180deg, #f1f9ff, #eef8ff);
+      }
+
+      td {
+        padding: 12px 10px;
+        text-align: center;
+        border-bottom: 1px solid rgba(3, 34, 85, 0.04);
+        color: #123;
+      }
+
+      /* Scroll body: limit height for tbody area */
+      .table-scroll {
+        max-height: 320px;
+        overflow: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Action icons (edit/delete) */
+      .icon-btn {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 0 6px;
+      }
+      .icon-btn.edit {
+        color: #0769e4;
+      }
+      .icon-btn.del {
+        color: #e04545;
+      }
+
+      /* Responsive */
+      @media (max-width: 880px) {
+        .card {
+          padding: 12px;
+          gap: 12px;
+        }
+        .meta {
+          order: 2;
+          flex: 1 1 100%;
+        }
+        .form-column {
+          order: 1;
+          flex: 1 1 100%;
+        }
+        table {
+          min-width: 640px;
+          font-size: 13px;
+        }
+      }
+
+      /* small neat footer */
+      footer {
+        text-align: center;
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        💠 Interaktiv Forma va Jadval — Qo'shish · Tahrirlash · O'chirish
+      </header>
+
+      <main class="card" aria-live="polite">
+        <!-- Left column: form -->
+        <section class="form-column" aria-labelledby="form-title">
+          <div id="form-title" class="form-title">
+            Talaba ma'lumotlarini kiriting
+          </div>
+
+          <form id="studentForm" novalidate>
+            <div class="row" style="margin-bottom: 10px">
+              <div class="col">
+                <label for="name">Ism, Familiya</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Masalan: Anvarbek Toshmamatov"
+                  required
+                />
+              </div>
+              <div class="col">
+                <label for="age">Yosh</label>
+                <input
+                  id="age"
+                  name="age"
+                  type="number"
+                  min="10"
+                  max="100"
+                  placeholder="20"
+                  required
+                />
+              </div>
+            </div>
+
+            <div style="margin-bottom: 10px">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="example@mail.uz"
+                required
+              />
+            </div>
+
+            <div style="margin-bottom: 10px">
+              <label for="major">Yo'nalish</label>
+              <select id="major" name="major" required>
+                <option value="">— Yo'nalishni tanlang —</option>
+                <option value="Kompyuter ilmlari va dasturlash texnologiyalari">
+                  Kompyuter ilmlari va dasturlash texnologiyalari
+                </option>
+                <option value="Kompyuter injiniring">
+                  Kompyuter injiniring
+                </option>
+                <option value="Dasturiy injiniring">Dasturiy injiniring</option>
+                <option value="Amaliy matematika">Amaliy matematika</option>
+                <option value="Sun'iy intellekt">Sun'iy intellekt</option>
+                <option value="Axborot tizimlari">Axborot tizimlari</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="note">Izoh (ixtiyoriy)</label>
+              <textarea
+                id="note"
+                name="note"
+                rows="3"
+                placeholder="Qisqacha yozing..."
+              ></textarea>
+            </div>
+
+            <div class="actions" role="group" aria-label="Form actions">
+              <button
+                id="submitBtn"
+                class="btn"
+                type="submit"
+                title="Qo'shish yoki yangilash"
+              >
+                ➕ Qo'shish
+              </button>
+              <button
+                id="resetBtn"
+                class="btn secondary"
+                type="button"
+                title="Tozalash"
+              >
+                🧹 Tozalash
+              </button>
+              <div style="flex: 1"></div>
+              <small style="color: var(--muted); font-weight: 600"
+                >Jadval pastda avtomatik yangilanadi</small
+              >
+            </div>
+          </form>
+        </section>
+
+        <!-- Right column: meta / yordam -->
+        <aside class="meta" aria-labelledby="meta-title">
+          <h4 id="meta-title">Qisqacha yordam</h4>
+          <p>
+            • Forma to‘ldirilgach <strong>Qo'shish</strong> tugmasini bosing —
+            yangi satr qo‘shiladi.<br />
+            • Tahrirlash uchun satrdagi ✏️ tugmasini bosing — formaga yuklanadi,
+            so‘ng <strong>Yangilash</strong> tugmasi bilan saqlang.<br />
+            • O'chirish uchun 🗑️ tugmasini bosing.
+          </p>
+          <hr
+            style="
+              margin: 12px 0;
+              border: none;
+              border-top: 1px solid rgba(3, 34, 85, 0.04);
+            "
+          />
+          <p style="font-size: 13px; color: var(--muted)">
+            <strong>Maslahat:</strong> Kichik ekranlarda forma ustunlari pastga
+            tushadi va jadvalni scroll orqali ko'rish mumkin.
+          </p>
+        </aside>
+      </main>
+
+      <!-- Jadval -->
+      <section class="table-card" aria-labelledby="list-title">
+        <div class="table-head">
+          <h3 id="list-title">Foydalanuvchilar ro'yxati</h3>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <span style="color: var(--muted); font-size: 13px"
+              >Satrlarga avtomatik raqam beriladi</span
+            >
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <div
+            class="table-scroll"
+            id="tableScroll"
+            tabindex="0"
+            aria-label="Foydalanuvchilar jadvali (scrollable)"
+          >
+            <table aria-describedby="list-title">
+              <thead>
+                <tr>
+                  <th style="width: 56px">#</th>
+                  <th>Ism</th>
+                  <th>Email</th>
+                  <th style="width: 72px">Yosh</th>
+                  <th>Yo'nalish</th>
+                  <th>Izoh</th>
+                  <th style="width: 120px">Amallar</th>
+                </tr>
+              </thead>
+              <tbody id="tbody">
+                <!-- Dastlab namunaviy satrlar (misol) -->
+                <tr>
+                  <td>1</td>
+                  <td>Ali Rasulov</td>
+                  <td>ali@example.uz</td>
+                  <td>21</td>
+                  <td>Kompyuter injiniring</td>
+                  <td>Frontend yo'nalishida</td>
+                  <td>
+                    <button
+                      class="icon-btn edit"
+                      title="Tahrirlash"
+                      aria-label="Tahrirlash"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      class="icon-btn del"
+                      title="O'chirish"
+                      aria-label="O'chirish"
+                    >
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Laylo Saidova</td>
+                  <td>laylo@mail.com</td>
+                  <td>23</td>
+                  <td>Sun'iy intellekt</td>
+                  <td>AI bo'yicha qiziqaman</td>
+                  <td>
+                    <button
+                      class="icon-btn edit"
+                      title="Tahrirlash"
+                      aria-label="Tahrirlash"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      class="icon-btn del"
+                      title="O'chirish"
+                      aria-label="O'chirish"
+                    >
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <footer style="margin-top: 12px">
+        © 2025 — Interaktiv sahifa. Dizayn & Kod: Anvarbek
+      </footer>
+    </div>
+
+    <!-- Scripting: funksiyalar qo'shish/tahrirlash/o'chirish -->
+    <script>
+      (function () {
+        const form = document.getElementById("studentForm");
+        const tbody = document.getElementById("tbody");
+        const submitBtn = document.getElementById("submitBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const tableScroll = document.getElementById("tableScroll");
+
+        let editingRow = null; // hozir tahrirlanayotgan tr element (agar bo'lsa)
+
+        // Yordamchi: satr raqamlarini yangilash
+        function refreshNumbers() {
+          const rows = Array.from(tbody.querySelectorAll("tr"));
+          rows.forEach((r, i) => {
+            const first = r.querySelector("td");
+            if (first) first.textContent = i + 1;
+          });
+        }
+
+        // Yordamchi: clear form va rejimni tiklash
+        function clearForm() {
+          form.reset();
+          editingRow = null;
+          submitBtn.textContent = "➕ Qo'shish";
+          submitBtn.title = "Qo'shish";
+        }
+
+        // Form validatsiyasi: HTML5 validatsiya ishlaydi, lekin qo'shimcha tekshiruv
+        function validateForm() {
+          if (!form.name.value.trim()) {
+            alert("Ism kiriting");
+            form.name.focus();
+            return false;
+          }
+          if (!form.email.value.trim() || !form.email.checkValidity()) {
+            alert("To'g'ri email kiriting");
+            form.email.focus();
+            return false;
+          }
+          if (!form.age.value || Number(form.age.value) < 10) {
+            alert("Yoshni tekshiring (kamida 10)");
+            form.age.focus();
+            return false;
+          }
+          if (!form.major.value) {
+            alert("Yo'nalishni tanlang");
+            form.major.focus();
+            return false;
+          }
+          return true;
+        }
+
+        // Qo'shish yoki yangilash hodisasi
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!validateForm()) return;
+
+          const name = form.name.value.trim();
+          const email = form.email.value.trim();
+          const age = form.age.value.trim();
+          const major = form.major.value;
+          const note = form.note.value.trim();
+
+          if (editingRow) {
+            // yangilash
+            editingRow.children[1].textContent = name;
+            editingRow.children[2].textContent = email;
+            editingRow.children[3].textContent = age;
+            editingRow.children[4].textContent = major;
+            editingRow.children[5].textContent = note;
+            clearForm();
+          } else {
+            // yangi satr qo'shish
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <button class="icon-btn edit" title="Tahrirlash" aria-label="Tahrirlash">✏️</button>
+              <button class="icon-btn del" title="O'chirish" aria-label="O'chirish">🗑️</button>
+            </td>
+          `;
+            // to'ldirish
+            tr.children[1].textContent = name;
+            tr.children[2].textContent = email;
+            tr.children[3].textContent = age;
+            tr.children[4].textContent = major;
+            tr.children[5].textContent = note;
+
+            tbody.appendChild(tr);
+            refreshNumbers();
+
+            // avtomatik scroll pastga yangi qo'shilgan element ko'rinishi uchun
+            setTimeout(() => {
+              tr.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }, 60);
+          }
+
+          clearForm();
+        });
+
+        // Reset tugma (formni tozalash)
+        resetBtn.addEventListener("click", function () {
+          if (confirm("Formani tozalaysizmi?")) clearForm();
+        });
+
+        // Delegatsiya: tahrirlash va o'chirish tugmalarini aniqlash
+        tbody.addEventListener("click", function (e) {
+          const editBtn = e.target.closest(".edit");
+          const delBtn = e.target.closest(".del");
+          const targetRow = e.target.closest("tr");
+
+          if (editBtn) {
+            // tahrirlash: formga ma'lumotlarni yuklash
+            editingRow = targetRow;
+            form.name.value = targetRow.children[1].textContent;
+            form.email.value = targetRow.children[2].textContent;
+            form.age.value = targetRow.children[3].textContent;
+            form.major.value = targetRow.children[4].textContent;
+            form.note.value = targetRow.children[5].textContent;
+            submitBtn.textContent = "✏️ Yangilash";
+            submitBtn.title = "Yangilash";
+            // fokusni isminga qo'yish
+            form.name.focus();
+          }
+
+          if (delBtn) {
+            if (confirm("Ushbu satrni o'chirmoqchimisiz?")) {
+              targetRow.remove();
+              refreshNumbers();
+            }
+          }
+        });
+
+        // Boshlang'ich: raqamlarni yangilash (namuna satrlar uchun)
+        refreshNumbers();
+      })();
+    </script>
+  </body>
+</html>
